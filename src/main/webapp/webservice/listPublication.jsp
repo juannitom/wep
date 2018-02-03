@@ -10,7 +10,7 @@
 <%@page import="com.mongodb.QueryBuilder"%>
 <%@page import="com.mongodb.DBObject"%>
 <%@page import="com.mongodb.DBCollection"%>
-<%@page import="connexion.Connexion"%>
+<%@page import="Connexion.Connexion"%>
 <%@page import="com.mongodb.DB"%>
 <%@page import="com.mongodb.DBCursor"%>
 <%@page import="org.json.JSONArray"%>
