@@ -16,20 +16,6 @@
     <body>
         <h1>test</h1>
         <p>hey</p>
-        <% try {
-             out.println("heyy");
-             UtilisateurDAO pub = new UtilisateurDAO();
-             Utilisateur[] list = pub.list();
-             for(int i=0;i<list.length;i++){
-                 out.println(list[i].getId());
-                 out.println(list[i].getEmail());
-                 out.println(list[i].getEmploi());
-                 out.println(list[i].getNom());
-                 out.println(list[i].getSexe());
-             }
-         } catch (Exception e) {
-             System.out.println(e.getMessage());
-         }
-        %>
+        
     </body>
 </html>
