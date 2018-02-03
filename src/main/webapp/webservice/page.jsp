@@ -17,6 +17,7 @@
         <h1>test</h1>
         <p>hey</p>
         <% try {
+             out.println("heyy");
              UtilisateurDAO pub = new UtilisateurDAO();
              Utilisateur[] list = pub.list();
              for(int i=0;i<list.length;i++){
