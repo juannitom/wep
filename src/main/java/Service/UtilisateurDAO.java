@@ -32,7 +32,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("utilisateur");
+            DBCollection table = db.getCollection("Utilisateur");
             BasicDBObject searchQuery = new BasicDBObject();
 
             cursor = table.find();
