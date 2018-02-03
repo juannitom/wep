@@ -20,9 +20,9 @@ public class Connexion {
     DB db;
 
     public DB getConnection() throws Exception {
-   // MongoClient mongo = new MongoClient("ds119018.mlab.com", 19018);
-   // return db = mongo.getDB("weplay");
-    MongoClient mongo = new MongoClient("localhost", 27017);
+    MongoClient mongo = new MongoClient("ds119018.mlab.com", 19018);
     return db = mongo.getDB("weplay");
+    //MongoClient mongo = new MongoClient("localhost", 27017);
+    //return db = mongo.getDB("weplay");
     }
 }
