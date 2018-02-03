@@ -33,8 +33,7 @@ public class UtilisateurDAO {
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("Utilisateur");
-            BasicDBObject searchQuery = new BasicDBObject();
-
+            
             cursor = table.find();
 
             int a = 0;
