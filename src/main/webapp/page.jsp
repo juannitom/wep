@@ -21,14 +21,14 @@ try {
             UtilisateurDAO pub = new UtilisateurDAO();
             Utilisateur[] list = pub.list();
             for(int i=0;i<list.length;i++){
-                System.out.println(list[i].getId());
-                System.out.println(list[i].getEmail());
-                System.out.println(list[i].getEmploi());
-                System.out.println(list[i].getNom());
-                System.out.println(list[i].getSexe());
+               out.println(list[i].getId());
+               out.println(list[i].getEmail());
+               out.println(list[i].getEmploi());
+               out.println(list[i].getNom());
+               out.println(list[i].getSexe());
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            out.println(e.getMessage());
         }
         %>
 
