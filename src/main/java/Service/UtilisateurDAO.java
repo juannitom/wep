@@ -17,6 +17,7 @@ import com.mongodb.MongoException;
 import com.mongodb.QueryBuilder;
 import connexion.Connexion;
 import java.util.regex.Pattern;
+import org.bson.Document;
 
 /**
  *
@@ -28,12 +29,13 @@ public class UtilisateurDAO {
     Utilisateur[] user = new Utilisateur[100];
     Utilisateur u;
 
+
     public Utilisateur[] list() throws Exception {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("utilisateur");
-            
+
             cursor = table.find();
 
             int a = 0;
@@ -93,7 +95,8 @@ public class UtilisateurDAO {
         }
         return user;
     }
-        //findConnexion(String nom, String mdp)
+    //findConnexion(String nom, String mdp)
+
     public Utilisateur findConnexion(String nom, String mdp) throws Exception {
         DBCursor cursor = null;
         try {
@@ -109,7 +112,7 @@ public class UtilisateurDAO {
             int a = 0;
             DBObject obj = null;
             while (cursor.hasNext()) {
-                obj=cursor.next();
+                obj = cursor.next();
                 String id = String.valueOf(obj.get("_id"));
                 String email = String.valueOf(obj.get("email"));
                 String sexe = String.valueOf(obj.get("sexe"));
