@@ -17,8 +17,9 @@
 <%@page import="org.json.JSONObject"%>
 
 <%
+    response.setHeader("Access-Control-Allow-Origin", "*");
     JSONObject obj = new JSONObject();
-    JSONArray arr = new JSONArray();
+    JSONArray arr = new JSONObject obj = new JSOArray();
     Connexion mon = new Connexion();
     DBCursor cursor = null;
     try {
@@ -38,8 +39,7 @@
             obj = new JSONObject();
         }
         out.println(arr);
-        response.setHeader("Access-Control-Allow-Origin", "*");
-
+        
     } catch (MongoException e) {
         e.getMessage();
     }
