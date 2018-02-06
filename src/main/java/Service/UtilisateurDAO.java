@@ -32,7 +32,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("utilisateur");
+            DBCollection table = db.getCollection("Utilisateur");
             
             cursor = table.find();
 
@@ -65,7 +65,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("utilisateur");
+            DBCollection table = db.getCollection("Utilisateur");
             DBObject query
                     = QueryBuilder.start().and(
                             QueryBuilder.start("_id").regex(Pattern.compile(id)).get()
