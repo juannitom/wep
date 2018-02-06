@@ -11,6 +11,7 @@ package connexion;
  */
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 /**
  *
@@ -21,9 +22,16 @@ public class Connexion {
     DB db;
 
     public DB getConnection() throws Exception {
-      // MongoClient mongo = new MongoClient("ds119018.mlab.com", 19018);
-        //return db = mongo.getDB("weplay");
-        MongoClient mongo = new MongoClient("localhost", 27017);
-        return db = mongo.getDB("weplay");
+        try {
+            MongoClientURI mongo = new MongoClientURI("mongodb://anjara:anjara@ds125048.mlab.com:25048/dbweplay");
+            MongoClient mongoclient = new MongoClient(mongo);
+            db = mongoclient.getDB("dbweplay");
+
+            System.out.println(db);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        /* MongoClient mongo = new MongoClient("localhost", 27017);*/
+        return db ;
     }
 }
