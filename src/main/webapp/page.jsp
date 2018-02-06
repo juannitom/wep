@@ -17,7 +17,8 @@
         <h1>test</h1>
         <p>hey</p>
         <% 
-try {
+            out.println("hello");
+/*try {
             UtilisateurDAO pub = new UtilisateurDAO();
             Utilisateur[] list = pub.list();
             for(int i=0;i<list.length;i++){
@@ -29,7 +30,7 @@ try {
             }
         } catch (Exception e) {
             out.println(e.getMessage());
-        }
+        }*/
         %>
 
     </body>
