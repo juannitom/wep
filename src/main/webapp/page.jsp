@@ -22,13 +22,13 @@ try {
             UtilisateurDAO pub = new UtilisateurDAO();
             Utilisateur[] list = pub.list();
             out.println(list.length);
-            for(int i=0;i<list.length;i++){
+            /*for(int i=0;i<list.length;i++){
                out.println(list[i].getId());
                out.println(list[i].getEmail());
                out.println(list[i].getEmploi());
                out.println(list[i].getNom());
                out.println(list[i].getSexe());
-            }
+            }*/
         } catch (Exception e) {
             out.println(e.getMessage());
         }

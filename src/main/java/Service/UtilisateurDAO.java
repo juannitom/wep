@@ -32,7 +32,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("Utilisateur");
+            DBCollection table = db.getCollection("utilisateur");
             
             cursor = table.find();
 
@@ -65,7 +65,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("Utilisateur");
+            DBCollection table = db.getCollection("utilisateur");
             DBObject query
                     = QueryBuilder.start().and(
                             QueryBuilder.start("_id").regex(Pattern.compile(id)).get()
@@ -98,7 +98,7 @@ public class UtilisateurDAO {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("Utilisateur");
+            DBCollection table = db.getCollection("utilisateur");
             DBObject query
                     = QueryBuilder.start().and(
                             QueryBuilder.start("nom").regex(Pattern.compile(nom)).get(),
@@ -149,7 +149,7 @@ public class UtilisateurDAO {
 
     public void updateUtilisateur(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -170,7 +170,7 @@ public class UtilisateurDAO {
 
     public void updateNom(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -185,7 +185,7 @@ public class UtilisateurDAO {
 
     public void updateEmail(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -200,7 +200,7 @@ public class UtilisateurDAO {
 
     public void updateMdp(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -215,7 +215,7 @@ public class UtilisateurDAO {
 
     public void updateEmploi(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -230,7 +230,7 @@ public class UtilisateurDAO {
 
     public void updatePhoto(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -245,7 +245,7 @@ public class UtilisateurDAO {
 
     public void updateScore(Utilisateur up) throws Exception {
         DB db = mon.getConnection();
-        DBCollection table = db.getCollection("Utilisateur");
+        DBCollection table = db.getCollection("utilisateur");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", up.getId());
@@ -261,7 +261,7 @@ public class UtilisateurDAO {
     public void deleteUtilisateur(String id) throws Exception {
         try {
             DB db = mon.getConnection();
-            DBCollection table = db.getCollection("Utilisateur");
+            DBCollection table = db.getCollection("utilisateur");
             BasicDBObject searchQuery = new BasicDBObject();
             searchQuery.put("_id", id);
             table.remove(searchQuery);
