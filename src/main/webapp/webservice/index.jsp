@@ -16,7 +16,8 @@
     <body>
         <h1>test</h1>
         <%
-            try {
+            out.println("haaaaaaaaaaaaaaaaaaaaaaaaaaaaahahahahahha");
+           /* try {
                 MatchsDAO match = new MatchsDAO();
                 CoordonneesDAO coord = new CoordonneesDAO();
                 int score = coord.getTotalPoint("matchs_1", "UTL_1");
@@ -27,7 +28,7 @@
                 out.println(next);
             } catch (Exception e) {
                 out.println(e.getMessage());
-            }
+            }*/
         %>
     </body>
 </html>
