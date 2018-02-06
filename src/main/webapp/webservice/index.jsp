@@ -22,7 +22,7 @@
                 /*CoordonneesDAO coord = new CoordonneesDAO();
                 int score = coord.getTotalPoint("matchs_1", "UTL_1");
                 out.println("score : " + score);*/
-                String id = match.getDernier("matchs");
+                String id = match.getDernier("utilisateur");
                 out.println(id);
                 String next = match.nouveauId(id);
                 out.println(next);
