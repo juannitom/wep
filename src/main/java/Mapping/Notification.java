@@ -12,53 +12,75 @@ package Mapping;
 public class Notification {
 
     private String id;
-    private String idaction;
-    private String idpub;
+    private String idUser;
+    private String idUserPost; 
+    private String action;
+    private String idPub;
     private String daty;
 
-    public Notification() {
+    public Notification(String id, String idUser, String idUserPost, String action, String idPub, String daty) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idUserPost = idUserPost;
+        this.action = action;
+        this.idPub = idPub;
+        this.daty = daty;
+    }
+    
+    
 
+    public String getIdUserPost() {
+        return idUserPost;
     }
 
-    public Notification(String id, String idaction, String idpub, String daty) {
-        this.id = id;
-        this.idaction = idaction;
-        this.idpub = idpub;
-        this.daty = daty;
+    public void setIdUserPost(String idUserPost) {
+        this.idUserPost = idUserPost;
+    }
+
+  
+
+    public Notification() {
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public String getIdaction() {
-        return idaction;
+    public String getAction() {
+        return action;
     }
 
-    public void setIdaction(String idaction) {
-        this.idaction = idaction;
-    }
-
-    public String getIdpub() {
-        return idpub;
-    }
-
-    public void setIdpub(String idpub) {
-        this.idpub = idpub;
+    public String getIdPub() {
+        return idPub;
     }
 
     public String getDaty() {
         return daty;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public void setIdPub(String idPub) {
+        this.idPub = idPub;
+    }
+
     public void setDaty(String daty) {
         this.daty = daty;
     }
-
     
-
+    
 }

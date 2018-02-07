@@ -5,7 +5,9 @@
  */
 package Service;
 
+import Mapping.Demande;
 import Mapping.Publication;
+import Mapping.Utilisateur;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -14,6 +16,9 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.QueryBuilder;
 import connexion.Connexion;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -26,15 +31,15 @@ public class PublicationDAO {
     Publication[] publication = new Publication[100];
 //
 
-    public Publication[] list() throws Exception {
+    public List<Publication> list() throws Exception {
+        List<Publication> rep = new ArrayList<Publication>(); 
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("publication");
-            
-            cursor = table.find();
+            BasicDBObject searchQuery = new BasicDBObject();
 
-            int a = 0;
+            cursor = table.find();
 
             while (cursor.hasNext()) {
                 DBObject obj = cursor.next();
@@ -43,17 +48,31 @@ public class PublicationDAO {
                 String description = String.valueOf(obj.get("description"));
                 String photo = String.valueOf(obj.get("photo"));
                 String daty = String.valueOf(obj.get("daty"));
-                publication[a] = new Publication(id, idUser, description, photo, daty);
-                a++;
-
+                Publication p = new Publication(id, idUser, description, photo, daty);
+                rep.add(p);
             }
 
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return publication;
+        return rep;
     }
 
+         public void save(Publication ajout) throws Exception {
+        try {
+            DB db = mon.getConnection();
+            DBCollection table = db.getCollection("publication");
+            BasicDBObject document = new BasicDBObject();
+            document.put("idUser", ajout.getIdUser());
+            document.put("description", ajout.getDescription());
+            document.put("photo", ajout.getPhoto());
+            document.put("daty", ajout.getDaty());
+            table.insert(document);
+        } catch (MongoException e) {
+            e.printStackTrace();
+        }
+    }
+         
     public void delete(String id) throws Exception {
         try {
             DB db = mon.getConnection();
@@ -66,32 +85,30 @@ public class PublicationDAO {
         }
     }
 
-    public Publication[] findById(String idUser) throws Exception {
+    public Publication findById(String id) throws Exception {
         DBCursor cursor = null;
+        Publication p = null;
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("publication");
             DBObject query
-                    = QueryBuilder.start().and(
-                            QueryBuilder.start("idUser").regex(Pattern.compile(idUser)).get()
+                    = QueryBuilder.start().or(
+                            QueryBuilder.start("_id").regex(Pattern.compile(id)).get()
                     ).get();
 
             cursor = table.find(query);
-            int a = 0;
-            DBObject obj = null;
             while (cursor.hasNext()) {
-                String id = String.valueOf(obj.get("_id"));
+                DBObject obj = cursor.next();
+                String idUser = String.valueOf(obj.get("idUser"));
                 String description = String.valueOf(obj.get("description"));
                 String photo = String.valueOf(obj.get("photo"));
                 String daty = String.valueOf(obj.get("daty"));
-                publication[a] = new Publication(id, idUser, description, photo, daty);
-                a++;
-
+                p = new Publication(id, idUser, description, photo, daty);
             }
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return publication;
+        return p;
     }
 
     //findNbPubUser(int idUser)
@@ -143,5 +160,16 @@ public class PublicationDAO {
         BasicDBObject updateObj = new BasicDBObject();
         updateObj.put("$set", newDocument);
         table.update(query, updateObj);
+    }
+     public String getDatySystem(){
+        Calendar datyAndroany = Calendar.getInstance();
+            
+            int jour = datyAndroany.get(Calendar.DAY_OF_MONTH);
+            int m = datyAndroany.get(Calendar.MONTH);
+            int ans = datyAndroany.get(Calendar.YEAR);
+            
+             int mois = m+1;
+             
+             return ans+"-"+mois+"-"+jour;             
     }
 }

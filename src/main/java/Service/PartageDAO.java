@@ -28,38 +28,23 @@ import java.util.regex.Pattern;
 public class PartageDAO {
 
     Connexion mon = new Connexion();
-    Partage[] jaime = new Partage[100];
 
-    public Partage[] findById(String idpub) throws Exception {
+    public DBCursor findById(String idPub) throws Exception {
         DBCursor cursor = null;
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("partage");
-            DBObject query
-                    = QueryBuilder.start().and(
-                            QueryBuilder.start("idPub").regex(Pattern.compile(idpub)).get()
-                    ).get();
-
-            cursor = table.find(query);
-
-            int a = 0;
-
+            BasicDBObject searchQuery = new BasicDBObject();
+            searchQuery.put("idPub", idPub);
+            cursor = table.find(searchQuery);
             while (cursor.hasNext()) {
-                DBObject obj = cursor.next();
-                String id = String.valueOf(obj.get("_id"));
-                String idu = String.valueOf(obj.get("idUser"));
-                String idp = String.valueOf(obj.get("idPub"));
-                jaime[a] = new Partage(id, idu, idp);
-                a++;
-
+                System.out.println(cursor.next());
             }
-
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return jaime;
+        return cursor;
     }
-
 //fonction findCount(int idPub)
     public int findCount(String idPub) throws Exception {
         DBCursor cursor = null;
@@ -85,7 +70,6 @@ public class PartageDAO {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("partage");
             BasicDBObject document = new BasicDBObject();
-            document.put("_id", ajout.getId());
             document.put("idUser", ajout.getIdUser());
             document.put("idPub", ajout.getIdPub());
             table.insert(document);

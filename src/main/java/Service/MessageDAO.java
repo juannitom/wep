@@ -12,6 +12,11 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoException;
 import connexion.Connexion;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 /**
@@ -20,30 +25,72 @@ import connexion.Connexion;
  */
 public class MessageDAO {
         Connexion mon = new Connexion();
-        //find(String destinateur, String expediteur)
-        public DBCursor find(String destinateur, String expediteur) throws Exception {
+       
+        public List<Message> findMessage(String destinateur, String expediteur) throws Exception {
         DBCursor cursor = null;
+        List<Message> rep = new ArrayList<Message>();
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("message");
-            BasicDBObject searchQuery = new BasicDBObject();
-            searchQuery.put("destinateur", destinateur);
-            searchQuery.put("expediteur", expediteur);
-            cursor = table.find(searchQuery);
+            DBObject query
+                    = QueryBuilder.start().or(
+                            QueryBuilder.start("destinateur").regex(Pattern.compile(destinateur)).get(),
+                            QueryBuilder.start("expediteur").regex(Pattern.compile(expediteur)).get()
+                    ).get();
+
+            cursor = table.find(query);
+            DBObject obj = null;
             while (cursor.hasNext()) {
-                System.out.println(cursor.next());
+                obj=cursor.next();
+                String id = String.valueOf(obj.get("_id"));
+                destinateur = String.valueOf(obj.get("destinateur"));
+                expediteur = String.valueOf(obj.get("expediteur"));
+                String message = String.valueOf(obj.get("message"));
+                Message m = new Message(id, destinateur, expediteur, message);
+                rep.add(m);
             }
+
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return cursor;
+        return rep;
     }
-            public void inscription(Message ajout) throws Exception {
+        
+        public List<Message> findMess(String destinateur, String expediteur) throws Exception {
+        DBCursor cursor = null;
+        List<Message> rep = new ArrayList<Message>();
+        try {
+            DB db = mon.getConnection();
+            DBCollection table = db.getCollection("message");
+            DBObject query
+                    = QueryBuilder.start().and(
+                            QueryBuilder.start("destinateur").regex(Pattern.compile(destinateur)).get(),
+                            QueryBuilder.start("expediteur").regex(Pattern.compile(expediteur)).get()
+                    ).get();
+
+            cursor = table.find(query);
+            DBObject obj = null;
+            while (cursor.hasNext()) {
+                obj=cursor.next();
+                String id = String.valueOf(obj.get("_id"));
+                destinateur = String.valueOf(obj.get("destinateur"));
+                expediteur = String.valueOf(obj.get("expediteur"));
+                String message = String.valueOf(obj.get("message"));
+                Message m = new Message(id, destinateur, expediteur, message);
+                rep.add(m);
+            }
+
+        } catch (MongoException e) {
+            e.printStackTrace();
+        }
+        return rep;
+    }
+        
+        public void save(Message ajout) throws Exception {
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("message");
             BasicDBObject document = new BasicDBObject();
-            document.put("_id", ajout.getId());
             document.put("destinateur", ajout.getDestinateur());
             document.put("expediteur", ajout.getExpediteur());
             document.put("message", ajout.getMessage());
@@ -63,50 +110,4 @@ public class MessageDAO {
             e.printStackTrace();
         }
     }
-      /*public static List<Message> envoye(int expediteur, int destinateur)
-      {
-            List<Message> valiny = new ArrayList<Message>();
-        try {
-            //List<Message> ms = find(expediteur, destinateur);
-             for(int i = 0; i<ms.size(); i++)
-            {
-                //if(ms.get(i).getExpediteur()== expediteur)
-                {
-                    Message mes = new Message();
-                    mes.setId(ms.get(i).getId());
-                    mes.setDestinateur(ms.get(i).getExpediteur());
-                    mes.setExpediteur(ms.get(i).getDestinateur());
-                    mes.setMessage(ms.get(i).getMessage());
-                
-                valiny.add(mes);
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return valiny;
-      }
-      public static List<Message> reception(int expediteur, int destinateur)
-      {
-            List<Message> valiny = new ArrayList<Message>();
-        try {
-            //List<Message> ms = find(expediteur, destinateur);
-             for(int i = 0; i<ms.size(); i++)
-            {
-                //if(ms.get(i).getExpediteur()== destinateur)
-                {
-                    Message mes = new Message();
-                    mes.setId(ms.get(i).getId());
-                    mes.setDestinateur(ms.get(i).getExpediteur());
-                    mes.setExpediteur(ms.get(i).getDestinateur());
-                    mes.setMessage(ms.get(i).getMessage());
-                
-                valiny.add(mes);
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return valiny;
-      }*/
 }

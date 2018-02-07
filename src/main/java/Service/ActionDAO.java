@@ -40,42 +40,12 @@ public class ActionDAO {
         }
         return cursor;
     }
-   /* public static int findCount(int idPub) throws Exception {
-        int rep = 0;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = " select count(*) from jaime j join utilisateur u on j.idUser = u.id where idPub = ?";
-
-        try {
-            //conn = connexion.Connexion.getConnexion();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, idPub);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                rep = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return rep;
-    }*/
+   
     public void save(Jaime ajout) throws Exception {
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("jaime");
             BasicDBObject document = new BasicDBObject();
-            document.put("_id", ajout.getId());
             document.put("idUser", ajout.getIdUser());
             document.put("idPub", ajout.getIdPub());
             table.insert(document);

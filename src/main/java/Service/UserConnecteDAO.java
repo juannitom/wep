@@ -26,10 +26,10 @@ import java.util.List;
 public class UserConnecteDAO {
 
     Connexion mon = new Connexion();
-    UserConnecte[] connect = new UserConnecte[100];
 
-    public UserConnecte[] list() throws Exception {
+    public List<UserConnecte> list() throws Exception {
         DBCursor cursor = null;
+        List<UserConnecte> rep = new ArrayList<UserConnecte>();
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("userConnecte");
@@ -43,15 +43,14 @@ public class UserConnecteDAO {
                 DBObject obj = cursor.next();
                 String id = String.valueOf(obj.get("_id"));
                 String idUser = String.valueOf(obj.get("idUser"));
-                connect[a] = new UserConnecte(id, idUser);
-                a++;
-
+                UserConnecte us = new UserConnecte(id, idUser);
+                rep.add(us);
             }
 
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return connect;
+        return rep;
     }
 
     public void connexion(String id, String idUser) throws Exception {
@@ -59,7 +58,6 @@ public class UserConnecteDAO {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("userConnecte");
             BasicDBObject document = new BasicDBObject();
-            document.put("_id", id);
             document.put("idUser", idUser);
             table.insert(document);
         } catch (MongoException e) {
@@ -72,7 +70,7 @@ public class UserConnecteDAO {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("userConnecte");
             BasicDBObject searchQuery = new BasicDBObject();
-            searchQuery.put("_id", id);
+            searchQuery.put("idUser", id);
             table.remove(searchQuery);
         } catch (MongoException e) {
             e.printStackTrace();

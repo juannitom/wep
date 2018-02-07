@@ -16,6 +16,8 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.QueryBuilder;
 import connexion.Connexion;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import org.bson.Document;
 
@@ -30,16 +32,17 @@ public class UtilisateurDAO {
     Utilisateur u;
 
 
-    public Utilisateur[] list() throws Exception {
+    //findById(String id)
+    
+    public List<Utilisateur> list() throws Exception {
         DBCursor cursor = null;
+        List<Utilisateur> rep = new ArrayList<Utilisateur>();
         try {
             DB db = mon.getConnection();
             DBCollection table = db.getCollection("utilisateur");
+            BasicDBObject searchQuery = new BasicDBObject();
 
             cursor = table.find();
-
-            int a = 0;
-
             while (cursor.hasNext()) {
                 DBObject obj = cursor.next();
                 String id = String.valueOf(obj.get("_id"));
@@ -51,17 +54,15 @@ public class UtilisateurDAO {
                 String photo = String.valueOf(obj.get("photo"));
                 String score = String.valueOf(obj.get("score"));
                 int score1 = Integer.valueOf(score);
-                user[a] = new Utilisateur(id, nom, email, mdp, sexe, emploi, photo, score1);
-                a++;
-
+                Utilisateur user = new Utilisateur(id, nom, email, mdp, sexe, emploi, photo, score1);
+               rep.add(user);
             }
 
         } catch (MongoException e) {
             e.printStackTrace();
         }
-        return user;
+        return rep;
     }
-    //findById(String id)
 
     public Utilisateur[] findById(String id) throws Exception {
         DBCursor cursor = null;
