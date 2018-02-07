@@ -19,7 +19,7 @@
 <%
     response.setHeader("Access-Control-Allow-Origin", "*");
     JSONObject obj = new JSONObject();
-    JSONArray arr = new JSONObject obj = new JSOArray();
+    JSONArray arr = new JSONArray();
     Connexion mon = new Connexion();
     DBCursor cursor = null;
     try {
